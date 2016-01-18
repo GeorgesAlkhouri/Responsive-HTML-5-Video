@@ -10,12 +10,15 @@
 
   <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-  <link rel="stylesheet" href="./css/custom.css"
+  <link rel="stylesheet" href="http://vjs.zencdn.net/5.4.6/video-js.css">
+  <link rel="stylesheet" href="./css/videojs-resolution-switcher.css">
+  <link rel="stylesheet" href="./css/custom.css">
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   <!-- Latest compiled and minified JavaScript -->
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-
+  <script src="http://vjs.zencdn.net/5.4.6/video.js"></script>
+  <script src="./js/videojs-resolution-switcher.js"></script>
   <!--[if lt IE 9]>
   <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
@@ -23,15 +26,45 @@
 
 <body>
 
-  <div class="row">
-    <div class="col-sm-offset-4 col-sm-4">
-      <div class="embed-responsive embed-responsive-16by9">
-          <video class="embed-responsive-item" controls preload="auto">
-              <source src=http://techslides.com/demos/sample-videos/small.mp4 type=video/mp4>
-          </video>
-      </div>
-    </div>
+  <div class="embed-responsive embed-responsive-16by9">
+      <video id="video" class="video-js embed-responsive-item" width="1024" heigth="768" controls preload="auto" data-setup="{}">
+      </video>
   </div>
+
+  <script>
+
+  $(document).ready(function() {
+    videojs('video', {
+      plugins: {
+        videoJsResolutionSwitcher: {
+          default: 'low', // Default resolution [{Number}, 'low', 'high'],
+          dynamicLabel: true // Display dynamic labels or gear symbol
+        }
+      }
+    }, function(){
+      var player = this;
+      window.player = player
+      player.updateSrc([
+        {
+          src: 'http://www.sample-videos.com/video/mp4/480/big_buck_bunny_480p_50mb.mp4',
+          type: 'video/mp4',
+          label: '480',
+          res: 480
+        },
+        {
+          src: 'http://www.sample-videos.com/video/mp4/720/big_buck_bunny_720p_50mb.mp4',
+          type: 'video/mp4',
+          label: '720',
+          res: 720
+        }
+      ])
+      player.on('resolutionchange', function(){
+        console.info('Source changed to %s', player.src())
+      })
+    })
+  });
+
+  </script>
 
 </body>
 </html>
