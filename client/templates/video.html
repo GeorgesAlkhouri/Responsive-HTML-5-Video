@@ -1,0 +1,24 @@
+<template name="video">
+
+  video.html
+
+  <p>Slug: {{slug}}</p>
+  <p>Name ...,</p>
+  <p>ID: {{_id}}</p>
+
+  <div class="row">
+    <div class="col-sm-offset-4 col-sm-4"> 
+
+      <div class="embed-responsive embed-responsive-16by9">          
+        <video class="embed-responsive-item video-elem" controls preload="auto">
+        
+          {{#each videoSources}}
+            <source src="{{this.src}}" type="{{this.format}}">
+          {{/each}}
+          
+        </video>
+      </div>
+    </div>
+  </div>
+
+</template>
