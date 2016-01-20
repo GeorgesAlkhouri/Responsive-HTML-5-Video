@@ -25,10 +25,11 @@
       <div class="col-sm-8">
         <video id="video" class="video-js vjs-16-9 vjs-default-skin" controls preload="auto" data-setup="{}"/>
       </div>
-      <div class="col-sm-2"></div>
+      <div class="col-sm-2"><button id="res_btn">Change Res</button></div>
     </div>
     <script>
       $(document).ready(function() {
+
         videojs('video', {
           plugins: {
             videoJsResolutionSwitcher: {
@@ -38,25 +39,29 @@
           }
         }, function(){
           var player = this;
-          window.player = player
+          window.player = player;
           player.updateSrc([
             {
               src: 'http://www.sample-videos.com/video/mp4/480/big_buck_bunny_480p_50mb.mp4',
               type: 'video/mp4',
-              label: '480',
-              res: 480
+              label: '480'
             },
             {
               src: 'http://www.sample-videos.com/video/mp4/720/big_buck_bunny_720p_50mb.mp4',
               type: 'video/mp4',
-              label: '720',
-              res: 720
+              label: '720'
             }
-          ])
+          ]);
           player.on('resolutionchange', function(){
-            console.info('Source changed to %s', player.src())
-          })
-        })
+            console.info('Source changed to %s', player.src());
+          });
+        });
+
+        $("#res_btn").click(function() {
+          var player =  videojs("video");
+          player.currentResolution("480");
+        });
+        
       });
 
     </script>
