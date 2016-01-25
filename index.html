@@ -16,6 +16,8 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
   <script src="http://vjs.zencdn.net/5.4.6/video.js"></script>
   <script src="./js/videojs-resolution-switcher.js"></script>
+  <script src="./js/underscore.js"></script>
+  <script src="./js/responsive.js"></script>
   <!--[if lt IE 9]>
     <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
@@ -31,8 +33,16 @@
     <div class="col-sm-1"></div>
     <div id="special" class="col-sm-10">
       <video id="video" class="video-js vjs-16-9 vjs-default-skin" controls preload="auto" data-setup='{}'>
-        <source src="./videos/big_buck_bunny_480p_50mb.mp4" type='video/mp4' label='480' />
+        <source src="./videos/big_buck_bunny_720p_50mb.mp4" type='video/mp4' label='Auto' />
         <source src="./videos/big_buck_bunny_720p_50mb.mp4" type='video/mp4' label='720' />
+        <source src="./videos/big_buck_bunny_480p_50mb.mp4" type='video/mp4' label='480' />
+        <source src="./videos/big_buck_bunny_640x360_50mb.mp4" type='video/mp4' label='360' />
+        <source src="./videos/big_buck_bunny_720p_50mb.ogv" type='video/ogg' label='720' />
+        <source src="./videos/big_buck_bunny_480p_50mb.ogv" type='video/ogg' label='480' />
+        <source src="./videos/big_buck_bunny_640x360_50mb.ogv" type='video/ogg' label='360' />
+        <source src="./videos/big_buck_bunny_720p_50mb.webm" type='video/webm' label='720' />
+        <source src="./videos/big_buck_bunny_480p_50mb.webm" type='video/webm' label='480' />
+        <source src="./videos/big_buck_bunny_640x360_50mb.webm" type='video/webm' label='360' />
       </video>
     </div>
     <div class="col-sm-1"></div>
@@ -66,12 +76,34 @@
   <script>
     $(document).ready(function() {
 
-      $("#res_btn").click(function() {
-        var player = videojs("video");
-        player.currentResolution("480");
-      });
+      videojs("video").ready(function() {
+        const player = this;
+        player.videoJsResolutionSwitcher();
 
-      videojs('video').videoJsResolutionSwitcher();
+        setInterval(function() {
+
+          console.log("CurrentTime: " + player.currentTime() + "\n" +
+                      "Buffer: " + player.bufferedEnd() + "\n" +
+                      "Duration: " + player.duration()+ "\n" +
+                      "Quality: " + player.currentResolution()["label"] + "\n" +
+                      "Width: " + $("#video").width() + "\n");
+
+          const needsUpdate = updateQuality(player.currentTime(), player.bufferedEnd(), player.duration(), player.currentResolution()["label"], $("#video").width());
+
+          console.log("needsUpdate: " +  needsUpdate + "\n");
+
+          if (_.first(needsUpdate)) {
+
+            if (player.currentResolution()["label"] !== _.last(needsUpdate)) {
+              console.log("change to:" + _.last(needsUpdate));
+              player.currentResolution(_.last(needsUpdate));
+            }
+          }
+
+        }, 5000
+      );
+
+      });
 
     });
   </script>
