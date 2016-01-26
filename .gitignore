@@ -1,2 +1,3 @@
-.remote-sync.json
 .tern-project
+dist/bower_components
+typings

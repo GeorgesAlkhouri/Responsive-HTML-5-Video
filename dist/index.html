@@ -7,17 +7,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Responsive-HTML-5-Video</title>
   <!-- Latest compiled and minified CSS -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-  <link rel="stylesheet" href="http://vjs.zencdn.net/5.4.6/video-js.css">
+  <link rel="stylesheet" href="./bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="./bower_components/video.js/dist/video-js.css">
   <link rel="stylesheet" href="./css/videojs-resolution-switcher.css">
   <link rel="stylesheet" href="./css/custom.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="./bower_components/jquery/dist/jquery.min.js"></script>
   <!-- Latest compiled and minified JavaScript -->
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-  <script src="http://vjs.zencdn.net/5.4.6/video.js"></script>
+  <script src="./bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script src="./bower_components/video.js/dist/video.js"></script>
   <script src="./js/videojs-resolution-switcher.js"></script>
-  <script src="./js/underscore.js"></script>
-  <script src="./js/responsive.js"></script>
+  <script src="./bower_components/underscore/underscore.js"></script>
+  <script src="./js/tsc.js"></script>
   <!--[if lt IE 9]>
     <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
@@ -77,32 +77,22 @@
     $(document).ready(function() {
 
       videojs("video").ready(function() {
+
         const player = this;
         player.videoJsResolutionSwitcher();
 
-        setInterval(function() {
+        const qualities = [
+          new Video.Responsive.Quality(1, 720, "720"),
+          new Video.Responsive.Quality(2, 480, "480"),
+          new Video.Responsive.Quality(3, 360, "360")
+        ];
 
-          console.log("CurrentTime: " + player.currentTime() + "\n" +
-                      "Buffer: " + player.bufferedEnd() + "\n" +
-                      "Duration: " + player.duration()+ "\n" +
-                      "Quality: " + player.currentResolution()["label"] + "\n" +
-                      "Width: " + $("#video").width() + "\n");
+        const quality = new Video.Responsive.QualityObserver(player, qualities);
+        quality.start(function(resolution) {
+          console.log(resolution);
 
-          const needsUpdate = updateQuality(player.currentTime(), player.bufferedEnd(), player.duration(), player.currentResolution()["label"], $("#video").width());
-
-          console.log("needsUpdate: " +  needsUpdate + "\n");
-
-          if (_.first(needsUpdate)) {
-
-            if (player.currentResolution()["label"] !== _.last(needsUpdate)) {
-              console.log("change to:" + _.last(needsUpdate));
-              player.currentResolution(_.last(needsUpdate));
-            }
-          }
-
-        }, 5000
-      );
-
+          player.currentResolution(resolution);
+        });
       });
 
     });

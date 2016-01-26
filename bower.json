@@ -1,0 +1,32 @@
+{
+  "name": "Responsive-HTML-5-Video",
+  "homepage": "https://github.com/GeorgesAlkhouri/Responsive-HTML-5-Video",
+  "authors": [
+    "Georges Alkhouri <georges.alkhouri@gmail.com>",
+    "Simeon Ackermann <simeon.ackermann.1@stud.htwk-leipzig.de>"
+  ],
+  "description": "",
+  "main": "",
+  "moduleType": [],
+  "license": "Apache 2.0",
+  "private": true,
+  "typescript": {
+    "definitions": [
+      "typings/jquery/jquery.d.ts"
+    ]
+  },
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.2.0",
+    "bootstrap": "~3.3.6",
+    "video.js": "videojs#~5.5.3",
+    "underscore": "~1.8.3",
+    "rxjs": "~4.0.7"
+  }
+}

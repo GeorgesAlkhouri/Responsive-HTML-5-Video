@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+        "noImplicitAny": true,
+        "removeComments": true,
+        "preserveConstEnums": true,
+        "out": "dist/js/tsc.js",
+        "sourceMap": false
+    },
+    "files": [
+      "typings/tsd.d.ts",
+      "src/quality.ts"
+    ]
+}
