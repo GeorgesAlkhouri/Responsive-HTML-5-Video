@@ -82,9 +82,9 @@
         player.videoJsResolutionSwitcher();
 
         const qualities = [
-          new Video.Responsive.Quality(1, 720, "720"),
+          new Video.Responsive.Quality(3, 720, "720"),
           new Video.Responsive.Quality(2, 480, "480"),
-          new Video.Responsive.Quality(3, 360, "360")
+          new Video.Responsive.Quality(1, 360, "360")
         ];
 
         const quality = new Video.Responsive.QualityObserver(player, qualities);

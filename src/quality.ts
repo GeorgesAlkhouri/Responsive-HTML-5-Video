@@ -43,7 +43,7 @@ namespace Video.Responsive {
         const width: number = $("#video").width(); //TODO: Remove
         const res: [boolean, Quality] = this.check(this.videoPlayer, width, this.qualities);
 
-        if (res[0] && res[1].label !== (<any>this.videoPlayer).currentResolution()["label"]) {
+        if (res[0] && res[1].label != (<any>this.videoPlayer).currentResolution()["label"]) {
           updateQuality(res[1].label);
         }
 

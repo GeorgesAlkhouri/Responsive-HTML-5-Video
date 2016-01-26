@@ -38,7 +38,7 @@ var Video;
                     ;
                     var width = $("#video").width();
                     var res = _this.check(_this.videoPlayer, width, _this.qualities);
-                    if (res[0] && res[1].label !== _this.videoPlayer.currentResolution()["label"]) {
+                    if (res[0] && res[1].label != _this.videoPlayer.currentResolution()["label"]) {
                         updateQuality(res[1].label);
                     }
                 }, 5000);
