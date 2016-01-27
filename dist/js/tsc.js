@@ -78,16 +78,17 @@ var Video;
                 }
             };
             QualityObserver.prototype.increase = function (current, knownQualities, playerWidth) {
-                var incPriority = current.priority + 1;
-                var incQuality = _.find(knownQualities, function (q) { return q.priority == incPriority; });
-                if (_.isUndefined(incQuality)) {
-                    return current;
-                }
-                if (incQuality.width > playerWidth) {
+                var newQuality = _(knownQualities)
+                    .chain()
+                    .filter(function (q) { return q.width <= playerWidth; })
+                    .sortBy(function (q) { return Math.abs(q.width - playerWidth); })
+                    .first()
+                    .value();
+                if (_.isUndefined(newQuality)) {
                     return current;
                 }
                 else {
-                    return incQuality;
+                    return newQuality;
                 }
             };
             return QualityObserver;

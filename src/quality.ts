@@ -99,18 +99,17 @@ namespace Video.Responsive {
 
     private increase(current: Quality, knownQualities: Quality[], playerWidth: number): Quality {
 
-      const incPriority: number = current.priority + 1;
+      const newQuality: Quality = _(knownQualities)
+        .chain()
+        .filter((q) => { return q.width <= playerWidth; })
+        .sortBy((q) => { return Math.abs(q.width - playerWidth); })
+        .first()
+        .value();
 
-      const incQuality: Quality = _.find<Quality>(knownQualities, (q) => { return q.priority == incPriority });
-
-      if (_.isUndefined(incQuality)) {
-        return current;
-      }
-
-      if (incQuality.width > playerWidth) {
+      if (_.isUndefined(newQuality)) {
         return current;
       } else {
-        return incQuality;
+        return newQuality;
       }
     }
   }
