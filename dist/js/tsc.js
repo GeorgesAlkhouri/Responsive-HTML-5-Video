@@ -38,6 +38,7 @@ var Video;
                     ;
                     var width = $("#video").width();
                     var res = _this.check(_this.videoPlayer, width, _this.qualities);
+                    console.log("CH: " + res[0] + " RES: " + res[1].label);
                     if (res[0] && res[1].label != _this.videoPlayer.currentResolution()["label"]) {
                         updateQuality(res[1].label);
                     }

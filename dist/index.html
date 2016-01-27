@@ -32,8 +32,7 @@
   <div class="row">
     <div class="col-sm-1"></div>
     <div id="special" class="col-sm-10">
-      <video id="video" class="video-js vjs-16-9 vjs-default-skin" controls preload="auto" data-setup='{}'>
-        <source src="./videos/big_buck_bunny_720p_50mb.mp4" type='video/mp4' label='Auto' />
+      <video id="video" class="video-js vjs-16-9 vjs-default-skin" controls poster="./images/poster.png" data-setup='{}'>
         <source src="./videos/big_buck_bunny_720p_50mb.mp4" type='video/mp4' label='720' />
         <source src="./videos/big_buck_bunny_480p_50mb.mp4" type='video/mp4' label='480' />
         <source src="./videos/big_buck_bunny_640x360_50mb.mp4" type='video/mp4' label='360' />
@@ -43,6 +42,9 @@
         <source src="./videos/big_buck_bunny_720p_50mb.webm" type='video/webm' label='720' />
         <source src="./videos/big_buck_bunny_480p_50mb.webm" type='video/webm' label='480' />
         <source src="./videos/big_buck_bunny_640x360_50mb.webm" type='video/webm' label='360' />
+        <source src="./videos/big_buck_bunny_720p_50mb.mp4" type='video/mp4' label='Auto' />
+        <track src="./subtitles/subtitles-de.vtt" kind="subtitles" srclang="de" label="Deutsch">
+          <track src="./subtitles/subtitles-en.vtt" kind="subtitles" srclang="en" label="English">
       </video>
     </div>
     <div class="col-sm-1"></div>
@@ -51,7 +53,7 @@
     <div class="col-sm-offset-1 col-sm-10">
 
       <div class="col-sm-4">
-        <div class="thumbnail" href="#">
+        <div class="thumbnail">
           <img class="img-responsive" src="http://placehold.it/400x300" alt="">
         </div>
         <div class="text-area">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no
@@ -59,13 +61,13 @@
           duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</div>
       </div>
       <div class="col-sm-4">
-        <div class="thumbnail" href="#">
+        <div class="thumbnail">
           <img class="img-responsive" src="http://placehold.it/400x300" alt="">
         </div>
         <div class="text-area">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea</div>
       </div>
       <div class="col-sm-4">
-        <div class="thumbnail" href="#">
+        <div class="thumbnail">
           <img class="img-responsive" src="http://placehold.it/400x300" alt="">
         </div>
         <div class="text-area">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam</div>
@@ -89,9 +91,9 @@
 
         const quality = new Video.Responsive.QualityObserver(player, qualities);
         quality.start(function(resolution) {
-          console.log(resolution);
 
-          player.currentResolution(resolution);
+          if (player.currentResolution()["label"] === "Auto")
+            player.currentResolution(resolution);
         });
       });
 
