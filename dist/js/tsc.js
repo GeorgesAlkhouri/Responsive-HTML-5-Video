@@ -21,7 +21,7 @@ var Video;
                 return matchingQuality;
             };
             Quality.sourceToQuality = function (source) {
-                var quality = new Quality(0, 0, source["label"]);
+                var quality = new Quality(0, 0, source);
                 return quality;
             };
             return Quality;
@@ -39,7 +39,7 @@ var Video;
                     var width = $("#video").width();
                     var res = _this.check(_this.videoPlayer, width, _this.qualities);
                     console.log("CH: " + res[0] + " RES: " + res[1].label);
-                    if (res[0] && res[1].label != _this.videoPlayer.currentResolution()["label"]) {
+                    if (res[0] && res[1].label != _this.videoPlayer.currentResolution()) {
                         updateQuality(res[1].label);
                     }
                 }, 5000);
@@ -95,5 +95,43 @@ var Video;
             return QualityObserver;
         })();
         Responsive.QualityObserver = QualityObserver;
+    })(Responsive = Video.Responsive || (Video.Responsive = {}));
+})(Video || (Video = {}));
+var Video;
+(function (Video) {
+    var Responsive;
+    (function (Responsive) {
+        var CustomVideoPlayer = (function () {
+            function CustomVideoPlayer(videoPlayer, videoElementId) {
+                this.videoPlayer = videoPlayer;
+                this.videoElementId = videoElementId;
+            }
+            CustomVideoPlayer.prototype.playerWidth = function () {
+                return $(this.videoElementId).width();
+            };
+            CustomVideoPlayer.prototype.playerHeight = function () {
+                return $(this.videoElementId).height();
+            };
+            CustomVideoPlayer.prototype.currentResolution = function () {
+                var label = this.videoPlayer.currentResolution()["label"];
+                if (label == "Auto") {
+                    return "720";
+                }
+                else {
+                    return label;
+                }
+            };
+            CustomVideoPlayer.prototype.buffered = function () {
+                return this.videoPlayer.buffered();
+            };
+            CustomVideoPlayer.prototype.duration = function () {
+                return this.videoPlayer.duration();
+            };
+            CustomVideoPlayer.prototype.currentTime = function () {
+                return this.videoPlayer.currentTime();
+            };
+            return CustomVideoPlayer;
+        })();
+        Responsive.CustomVideoPlayer = CustomVideoPlayer;
     })(Responsive = Video.Responsive || (Video.Responsive = {}));
 })(Video || (Video = {}));

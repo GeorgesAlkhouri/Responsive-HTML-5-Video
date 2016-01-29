@@ -1,6 +1,5 @@
-namespace Video.Responsive {
 
-  // const Qualities = [1, 2, 3];
+namespace Video.Responsive {
 
   export class Quality {
     constructor(public priority: number, public width: number, public label: string) { }
@@ -24,14 +23,14 @@ namespace Video.Responsive {
     }
 
     static sourceToQuality(source: any): Quality {
-      const quality: Quality = new Quality(0, 0, source["label"]);
+      const quality: Quality = new Quality(0, 0, source);
       return quality;
     }
   }
 
   export class QualityObserver {
 
-    constructor(private videoPlayer: VideoJSPlayer, private qualities: Quality[]) {
+    constructor(private videoPlayer: IVideoPlayer, private qualities: Quality[]) {
 
     }
 
@@ -45,16 +44,16 @@ namespace Video.Responsive {
 
         console.log("CH: " + res[0] + " RES: " + res[1].label);
 
-        if (res[0] && res[1].label != (<any>this.videoPlayer).currentResolution()["label"]) {
+        if (res[0] && res[1].label != this.videoPlayer.currentResolution()) {
           updateQuality(res[1].label);
         }
 
       }, 5000);
     }
 
-    private check(videoPlayer: VideoJSPlayer, playerWidth: number, qualities: Quality[]): [boolean, Quality] {
+    private check(videoPlayer: IVideoPlayer, playerWidth: number, qualities: Quality[]): [boolean, Quality] {
 
-      const quality: Quality = Quality.convertToQuality((<any>videoPlayer).currentResolution(), qualities);
+      const quality: Quality = Quality.convertToQuality(videoPlayer.currentResolution(), qualities);
 
       const range = 5;
       const buffer = Math.round(videoPlayer.buffered().end(0));
