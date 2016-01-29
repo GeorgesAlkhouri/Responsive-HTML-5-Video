@@ -26,7 +26,7 @@
 <body>
   <div class="row">
     <div class="col-sm-12">
-      <h1 class="header text-center">Damn Responsive Player</h1>
+      <h1 class="header text-center">Responsive Video Player</h1>
     </div>
   </div>
   <div class="row">
@@ -42,13 +42,23 @@
         <source src="./videos/big_buck_bunny_720p_50mb.webm" type='video/webm' label='720' />
         <source src="./videos/big_buck_bunny_480p_50mb.webm" type='video/webm' label='480' />
         <source src="./videos/big_buck_bunny_640x360_50mb.webm" type='video/webm' label='360' />
-        <source src="./videos/big_buck_bunny_720p_50mb.mp4" type='video/mp4' label='Auto' />
         <track src="./subtitles/subtitles-de.vtt" kind="subtitles" srclang="de" label="Deutsch">
           <track src="./subtitles/subtitles-en.vtt" kind="subtitles" srclang="en" label="English">
       </video>
     </div>
     <div class="col-sm-1"></div>
   </div>
+
+  <div class="row row-centered">
+    <div class="col-centered">
+      <div class="checkbox">
+        <label>
+          <input id="auto_checkbox" name="auto_checkbox" type="checkbox" checked> Enable Auto Resolution
+        </label>
+      </div>
+    </div>
+  </div>
+
   <div class="picture-area row">
     <div class="col-sm-offset-1 col-sm-10">
 
@@ -89,10 +99,11 @@
           new Video.Responsive.Quality(1, 360, "360")
         ];
 
-        const quality = new Video.Responsive.QualityObserver(player, qualities);
+        const videoPlayer = new Video.Responsive.CustomVideoPlayer(player, "#video");
+        const quality = new Video.Responsive.QualityObserver(videoPlayer, qualities);
         quality.start(function(resolution) {
 
-          if (player.currentResolution()["label"] === "Auto")
+          if ($("#auto_checkbox").prop('checked'))
             player.currentResolution(resolution);
         });
       });
