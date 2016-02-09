@@ -2,6 +2,8 @@
 
 *Work In Progress*
 
+This is a small study project to experiment with the HTML 5 video tag and a JavaScript video player ([Video.js](http://videojs.com)). The focus is on a responsive experience. Not just layout but also video quality and resolution.
+
 ## Requirements
 
 To run this project you need to have [Bower](http://bower.io) and [TSD](http://definitelytyped.org/tsd/) installed.
